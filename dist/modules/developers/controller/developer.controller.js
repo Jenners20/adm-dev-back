@@ -20,9 +20,21 @@ let DeveloperController = class DeveloperController {
         this.developerService = developerService;
     }
     async getDeveloper(response) {
-        const result = await this.developerService.findAll();
+        let developer = await this.developerService.findAll();
         return response.status(common_1.HttpStatus.OK).json({
-            result
+            developer
+        });
+    }
+    async deleteIntegrationbyId(response, id) {
+        await this.developerService.deleteIntegration(id);
+        return response.status(common_1.HttpStatus.OK).json({
+            "result": 'done'
+        });
+    }
+    async deleteDeveloperbyId(response, id) {
+        await this.developerService.deleteDeveloper(id);
+        return response.status(common_1.HttpStatus.OK).json({
+            "result": 'done'
         });
     }
     async getDeveloperbyId(response, id) {
@@ -38,22 +50,64 @@ let DeveloperController = class DeveloperController {
         });
     }
     async createDeveloper(response, body) {
-        await this.developerService.createDeveloper(body);
-        return response.status(common_1.HttpStatus.OK).json({
-            status: 'done'
-        });
+        try {
+            await this.developerService.createDeveloper(body);
+            return response.status(common_1.HttpStatus.OK).json({
+                status: 'done'
+            });
+        }
+        catch (err) {
+            return response.status(common_1.HttpStatus.BAD_REQUEST).json({
+                "success": false,
+            });
+        }
     }
     async createIntegration(response, body) {
-        await this.developerService.createIntegration(body);
-        return response.status(common_1.HttpStatus.OK).json({
-            status: 'done'
-        });
+        try {
+            await this.developerService.createIntegration(body);
+            return response.status(common_1.HttpStatus.OK).json({
+                status: 'done'
+            });
+        }
+        catch (err) {
+            console.log(err);
+            return response.status(common_1.HttpStatus.BAD_REQUEST).json({
+                "success": false,
+                status: 'done'
+            });
+        }
     }
     async getIntegration(response) {
         let result = await this.developerService.findIntegration();
         return response.status(common_1.HttpStatus.OK).json({
             result
         });
+    }
+    async getIntegrationbydate(response, date) {
+        console.log(1);
+        let result = await this.developerService.getIntegrationbyDate(date);
+        console.log(result);
+        return response.status(common_1.HttpStatus.OK).json({
+            result
+        });
+    }
+    async updateIntegration(response, id, status) {
+        try {
+            await this.developerService.updateIntegration(id, status);
+            console.log('----');
+            return response.status(common_1.HttpStatus.OK).json({
+                "success": true,
+                "data": {},
+                "reason": "",
+            });
+        }
+        catch (err) {
+            return response.status(common_1.HttpStatus.BAD_REQUEST).json({
+                "success": false,
+                "data": null,
+                "reason": "Invalid Parameters",
+            });
+        }
     }
 };
 __decorate([
@@ -63,6 +117,22 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], DeveloperController.prototype, "getDeveloper", null);
+__decorate([
+    (0, common_1.Delete)('/integracion/:id'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Number]),
+    __metadata("design:returntype", Promise)
+], DeveloperController.prototype, "deleteIntegrationbyId", null);
+__decorate([
+    (0, common_1.Delete)('/:id'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Number]),
+    __metadata("design:returntype", Promise)
+], DeveloperController.prototype, "deleteDeveloperbyId", null);
 __decorate([
     (0, common_1.Get)('/:id'),
     __param(0, (0, common_1.Res)()),
@@ -96,12 +166,29 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DeveloperController.prototype, "createIntegration", null);
 __decorate([
-    (0, common_1.Get)('/integration'),
+    (0, common_1.Get)('/find/integration'),
     __param(0, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], DeveloperController.prototype, "getIntegration", null);
+__decorate([
+    (0, common_1.Get)('/find/integration/bydate/:date'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)('date')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], DeveloperController.prototype, "getIntegrationbydate", null);
+__decorate([
+    (0, common_1.Put)('/integracion/:id/status/:status'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Param)('status')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Number, String]),
+    __metadata("design:returntype", Promise)
+], DeveloperController.prototype, "updateIntegration", null);
 DeveloperController = __decorate([
     (0, common_1.Controller)('developer'),
     __metadata("design:paramtypes", [developer_service_1.DeveloperService])

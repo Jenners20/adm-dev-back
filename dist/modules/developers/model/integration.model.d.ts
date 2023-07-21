@@ -8,4 +8,6 @@ export declare class IntegrationModel extends Model {
     production_date?: string;
     start_lab_date?: string;
     end_lab_date?: string;
+    cant_comercios?: number;
+    cant_pos?: number;
 }

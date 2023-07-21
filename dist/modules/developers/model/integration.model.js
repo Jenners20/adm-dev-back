@@ -69,6 +69,20 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], IntegrationModel.prototype, "end_lab_date", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        allowNull: true,
+        type: sequelize_typescript_1.DataType.INTEGER
+    }),
+    __metadata("design:type", Number)
+], IntegrationModel.prototype, "cant_comercios", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        allowNull: true,
+        type: sequelize_typescript_1.DataType.INTEGER
+    }),
+    __metadata("design:type", Number)
+], IntegrationModel.prototype, "cant_pos", void 0);
 IntegrationModel = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: 'integration',

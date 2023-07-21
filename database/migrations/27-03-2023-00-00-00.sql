@@ -20,7 +20,9 @@ service_type varchar(256) not null,
 status varchar(256),
 production_date date,
 start_lab_date date,
-end_lab_date date
+end_lab_date date,
+cant_comercios int4,
+cant_pos int4
 )
 
 create table users(
