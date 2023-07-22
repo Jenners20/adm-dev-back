@@ -12,4 +12,5 @@ export declare class DeveloperController {
     getIntegration(response: any): Promise<any>;
     getIntegrationbydate(response: any, date: string): Promise<any>;
     updateIntegration(response: any, id: number, status: string): Promise<any>;
+    addIntegration(response: any, body: any): Promise<any>;
 }

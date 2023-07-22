@@ -102,6 +102,19 @@ let DeveloperController = class DeveloperController {
             });
         }
         catch (err) {
+        }
+    }
+    async addIntegration(response, body) {
+        try {
+            await this.developerService.saveForm(body);
+            await this.developerService.insertDB(body.name);
+            return response.status(common_1.HttpStatus.OK).json({
+                "success": true,
+                "data": { body },
+                "reason": "",
+            });
+        }
+        catch (err) {
             return response.status(common_1.HttpStatus.BAD_REQUEST).json({
                 "success": false,
                 "data": null,
@@ -189,6 +202,14 @@ __decorate([
     __metadata("design:paramtypes", [Object, Number, String]),
     __metadata("design:returntype", Promise)
 ], DeveloperController.prototype, "updateIntegration", null);
+__decorate([
+    (0, common_1.Post)('/file'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], DeveloperController.prototype, "addIntegration", null);
 DeveloperController = __decorate([
     (0, common_1.Controller)('developer'),
     __metadata("design:paramtypes", [developer_service_1.DeveloperService])

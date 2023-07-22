@@ -11,4 +11,5 @@ export declare class DeveloperModel extends Model {
     independent?: boolean;
     start_date?: string;
     last_date?: string;
+    comment?: string;
 }

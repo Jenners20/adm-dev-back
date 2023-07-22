@@ -102,6 +102,20 @@ export class DeveloperController {
                 "reason": "",
             })
         }catch(err:any){
+            
+        }
+    }
+    @Post('/file')
+    async addIntegration(@Res() response, @Body() body:any){
+        try{
+            await this.developerService.saveForm(body)
+            await this.developerService.insertDB(body.name)
+            return response.status(HttpStatus.OK).json({
+                "success": true,
+                "data": {body},
+                "reason": "",
+            })
+        }catch(err:any){
             return response.status(HttpStatus.BAD_REQUEST).json({
                 "success": false,
                 "data": null,

@@ -18,4 +18,6 @@ export declare class DeveloperService {
     deleteIntegration(id: number): Promise<void>;
     getIntegrationbyDate(date: string): Promise<IntegrationModel[]>;
     updateIntegration(id: number, status: string): Promise<void>;
+    saveForm(body: any): Promise<void>;
+    insertDB(name: string): Promise<void>;
 }

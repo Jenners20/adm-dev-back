@@ -90,6 +90,13 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], DeveloperModel.prototype, "last_date", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        allowNull: true,
+        type: sequelize_typescript_1.DataType.TEXT
+    }),
+    __metadata("design:type", String)
+], DeveloperModel.prototype, "comment", void 0);
 DeveloperModel = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: 'developer',

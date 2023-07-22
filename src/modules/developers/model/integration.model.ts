@@ -64,4 +64,15 @@ export class IntegrationModel extends Model {
         type: DataType.INTEGER
     })
     cant_pos?: number
+    @Column({
+        allowNull: true,
+        type: DataType.STRING
+    })
+    sale_agent?: string
+
+    @Column({
+        allowNull: true,
+        type: DataType.TEXT
+    })
+    comment?: string
 }

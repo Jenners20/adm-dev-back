@@ -10,4 +10,6 @@ export declare class IntegrationModel extends Model {
     end_lab_date?: string;
     cant_comercios?: number;
     cant_pos?: number;
+    sale_agent?: string;
+    comment?: string;
 }

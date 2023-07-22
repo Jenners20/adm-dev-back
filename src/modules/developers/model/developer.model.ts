@@ -71,5 +71,9 @@ export class DeveloperModel extends Model {
         type: DataType.DATE
     })
     last_date?:string
-   
+    @Column({
+        allowNull: true,
+        type: DataType.TEXT
+    })
+    comment?:string
 }
