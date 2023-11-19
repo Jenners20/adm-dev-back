@@ -10,7 +10,6 @@ export class IntegrationModel extends Model {
     @PrimaryKey
     @Column({
         type: DataType.UUID,
-
     })
     integration_id?: number;
 

@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Post, Res, Body, Param, Delete,Put } from "@nestjs/common";
+import { Controller, Get, HttpStatus, Post, Res, Body, Param, Delete, Put } from "@nestjs/common";
 import { DeveloperService } from "../service/developer.service";
 
 @Controller('developer')
@@ -9,7 +9,6 @@ export class DeveloperController {
 
     @Get('')
     async getDeveloper(@Res() response,) {
-
         let developer = await this.developerService.findAll()
         return response.status(HttpStatus.OK).json({
             developer
@@ -55,7 +54,7 @@ export class DeveloperController {
         } catch (err: any) {
             return response.status(HttpStatus.BAD_REQUEST).json({
                 "success": false,
-
+                "data": {}
             })
         }
     }
@@ -65,7 +64,8 @@ export class DeveloperController {
         try {
             await this.developerService.createIntegration(body)
             return response.status(HttpStatus.OK).json({
-                status: 'done'
+                status: 'done',
+                "data": {}
             })
         } catch (err: any) {
             console.log(err)
@@ -84,38 +84,35 @@ export class DeveloperController {
     }
     @Get('/find/integration/bydate/:date')
     async getIntegrationbydate(@Res() response, @Param('date') date: string) {
-        console.log(1)
         let result = await this.developerService.getIntegrationbyDate(date);
-        console.log(result)
         return response.status(HttpStatus.OK).json({
             result
         })
     }
     @Put('/integracion/:id/status/:status')
-    async updateIntegration(@Res() response, @Param('id') id:number, @Param('status') status:string){
-        try{
-            await this.developerService.updateIntegration(id,status);
-            console.log('----')
+    async updateIntegration(@Res() response, @Param('id') id: number, @Param('status') status: string) {
+        try {
+            await this.developerService.updateIntegration(id, status);
             return response.status(HttpStatus.OK).json({
                 "success": true,
                 "data": {},
                 "reason": "",
             })
-        }catch(err:any){
-            
+        } catch (err: any) {
+
         }
     }
     @Post('/file')
-    async addIntegration(@Res() response, @Body() body:any){
-        try{
+    async addIntegration(@Res() response, @Body() body: any) {
+        try {
             await this.developerService.saveForm(body)
             await this.developerService.insertDB(body.name)
             return response.status(HttpStatus.OK).json({
                 "success": true,
-                "data": {body},
+                "data": { body },
                 "reason": "",
             })
-        }catch(err:any){
+        } catch (err: any) {
             return response.status(HttpStatus.BAD_REQUEST).json({
                 "success": false,
                 "data": null,

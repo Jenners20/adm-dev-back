@@ -59,6 +59,7 @@ let DeveloperController = class DeveloperController {
         catch (err) {
             return response.status(common_1.HttpStatus.BAD_REQUEST).json({
                 "success": false,
+                "data": {}
             });
         }
     }
@@ -66,7 +67,8 @@ let DeveloperController = class DeveloperController {
         try {
             await this.developerService.createIntegration(body);
             return response.status(common_1.HttpStatus.OK).json({
-                status: 'done'
+                status: 'done',
+                "data": {}
             });
         }
         catch (err) {
@@ -84,9 +86,7 @@ let DeveloperController = class DeveloperController {
         });
     }
     async getIntegrationbydate(response, date) {
-        console.log(1);
         let result = await this.developerService.getIntegrationbyDate(date);
-        console.log(result);
         return response.status(common_1.HttpStatus.OK).json({
             result
         });
@@ -94,7 +94,6 @@ let DeveloperController = class DeveloperController {
     async updateIntegration(response, id, status) {
         try {
             await this.developerService.updateIntegration(id, status);
-            console.log('----');
             return response.status(common_1.HttpStatus.OK).json({
                 "success": true,
                 "data": {},
