@@ -1,7 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { Sequelize } from "sequelize-typescript";
-import { Op } from "sequelize";
 import { DeveloperModel } from "../model/developer.model";
 import { IntegrationModel } from "../model/integration.model";
 const XLSX = require('xlsx')
@@ -51,8 +49,6 @@ export class DeveloperService {
         } else {
             aux = aux + 1;
         }
-
-        console.log(body)
         let integrationDB = {
             "integration_id": aux,
             "developer_id": body.developer_id,
@@ -69,8 +65,6 @@ export class DeveloperService {
     }
 
     async createDeveloper(body: any) {
-        console.log(body)
-
         const companyModelResponse = await this.developerModel.findAll();
         const ids = companyModelResponse.map(developer => developer['developer_id']);
         let aux = Math.max(...ids);
@@ -79,7 +73,6 @@ export class DeveloperService {
         } else {
             aux = aux + 1;
         }
-
         let bodyDB = {
             "developer_id": aux,
             "developer_name": body.developer_name,
@@ -90,12 +83,8 @@ export class DeveloperService {
             "POS": body.POS,
             "program_name": body.program_name,
             "independent": body.independent,
-
-
         }
         await this.developerModel.create(bodyDB)
-
-
     }
     async deleteDeveloper(id: number) {
         await this.developerModel.destroy({ where: { "developer_id": id } })
@@ -112,17 +101,15 @@ export class DeveloperService {
             integration.update({ "status": status }).catch(updated => console.log(updated))
         })
     }
-    async saveForm(body:any) {
+    async saveForm(body: any) {
         let folder_name = './files/'
         if (!fs.existsSync(folder_name)) {
             fs.mkdirSync(folder_name, { recursive: true })
         }
-
         let path = join(process.cwd(), folder_name + body.name)
         let base64Image = body.data.split(';base64,').pop();
         fs.writeFile(path, base64Image, { encoding: 'base64' }, function (err) {
         });
-
     }
     async insertDB(name: string) {
         let developer = await this.developerModel.findAll();
@@ -131,8 +118,6 @@ export class DeveloperService {
         let idDeveloper = developer.map(item => item['developer_id']);
         if (idDeveloper.length != 0) {
             maxidDeveloper = Math.max(...idDeveloper)
-            console.log(maxidDeveloper)
-            console.log(idDeveloper)
         } else {
             maxidDeveloper = 0
         }
@@ -142,7 +127,6 @@ export class DeveloperService {
             maxidIntegration = Math.max(...idintegration)
         } else {
             maxidIntegration = 0
-            console.log('aqui')
         }
         maxidIntegration++
         let company_name = integration.map(company => company['company_name'])
@@ -162,7 +146,7 @@ export class DeveloperService {
         let developerDb
         let developers = []
         let info = {
-            "company": dataExcel[8][4]|| dataExcel[8][3],
+            "company": dataExcel[8][4] || dataExcel[8][3],
             "tecnichian_name": dataExcel[12][3],
             "tecnichian_phone": dataExcel[12][8],
             "tecnichian_email": dataExcel[12][12],
@@ -179,7 +163,6 @@ export class DeveloperService {
             "comment": dataExcel[26][1],
             "sale_agent": dataExcel[29][3]
         }
-console.log(info)
         if (info['ECRTI'] == 'x') {
             services = 'ECRTI';
         } else {
@@ -197,7 +180,7 @@ console.log(info)
         }
         if (info['technician_name'] && info['technician_phone'] && info['technician_email']) {
             if (emails.includes(info['tecnichian_email']) && phones.includes(info['tecnichian_phone']) && dev_names.includes(info['tecnichian_name'])) {
-            }else{
+            } else {
                 maxidDeveloper++
                 techn_name = info['technician_name']
                 techn_phone = info['tecnichian_phone']
@@ -214,14 +197,14 @@ console.log(info)
                     "independent": '',
                     "start_date": today.toISOString(),
                     "last_date": today.toISOString(),
-                    "comment":''
+                    "comment": ''
                 })
             }
         }
-        
+
         if (info['provider_name'] && info['provider_phone'] && info['provider_email']) {
             if (emails.includes(info['provider_email']) && phones.includes(info['provider_phone']) && dev_names.includes(info['provider_name'])) {
-            }else{             
+            } else {
                 techn_name = info['provider_name']
                 techn_phone = info['provider_phone']
                 techn_email = info['provider_email']
@@ -237,13 +220,13 @@ console.log(info)
                     "independent": '',
                     "start_date": today.toISOString(),
                     "last_date": today.toISOString(),
-                    "comment":''
+                    "comment": ''
                 })
             }
         }
         if (info['others_name'] && info['others_phone'] && info['others_email']) {
             if (emails.includes(info['others_email']) && phones.includes(info['others_phone']) && dev_names.includes(info['others_name'])) {
-            }else{
+            } else {
                 techn_name = info['others_name']
                 techn_phone = info['others_phone']
                 techn_email = info['others_email']
@@ -259,11 +242,10 @@ console.log(info)
                     "independent": false,
                     "start_date": today.toISOString(),
                     "last_date": today.toISOString(),
-                    "comment":''
+                    "comment": ''
                 })
             }
         }
-        console.log(developers)
         await this.developerModel.bulkCreate(developers).catch(err => console.log(err))
         if (company_name.includes(info['company']) && service.includes(services)) {
 
@@ -274,15 +256,12 @@ console.log(info)
                 "company_name": info['company'],
                 "service_type": services,
                 "status": 'Dev',
-                
                 "start_lab_date": today.toISOString(),
-                
                 "cant_comercios": 1,
                 "cant_pos": 0,
                 "sale_agent": info['sale_agent'],
                 "comment": ''
             }
-            console.log(companyDB)
             await this.integrationModel.create(companyDB).catch(err => console.log(err))
         }
     }

@@ -10,8 +10,6 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const sequelize_1 = require("@nestjs/sequelize");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
 const developer_controller_1 = require("./modules/developers/controller/developer.controller");
 const developer_model_1 = require("./modules/developers/model/developer.model");
 const integration_model_1 = require("./modules/developers/model/integration.model");
@@ -26,14 +24,14 @@ AppModule = __decorate([
                 host: 'localhost',
                 port: 5432,
                 username: 'postgres',
-                password: '1610',
+                password: '1806',
                 database: 'postgres',
                 models: [developer_model_1.DeveloperModel, integration_model_1.IntegrationModel],
                 autoLoadModels: true,
                 synchronize: false,
             }), sequelize_1.SequelizeModule.forFeature([developer_model_1.DeveloperModel, integration_model_1.IntegrationModel])],
-        controllers: [app_controller_1.AppController, developer_controller_1.DeveloperController],
-        providers: [app_service_1.AppService, developer_service_1.DeveloperService],
+        controllers: [developer_controller_1.DeveloperController],
+        providers: [developer_service_1.DeveloperService],
     })
 ], AppModule);
 exports.AppModule = AppModule;

@@ -56,7 +56,6 @@ let DeveloperService = class DeveloperService {
         else {
             aux = aux + 1;
         }
-        console.log(body);
         let integrationDB = {
             "integration_id": aux,
             "developer_id": body.developer_id,
@@ -72,7 +71,6 @@ let DeveloperService = class DeveloperService {
         await this.integrationModel.create(integrationDB);
     }
     async createDeveloper(body) {
-        console.log(body);
         const companyModelResponse = await this.developerModel.findAll();
         const ids = companyModelResponse.map(developer => developer['developer_id']);
         let aux = Math.max(...ids);
@@ -127,8 +125,6 @@ let DeveloperService = class DeveloperService {
         let idDeveloper = developer.map(item => item['developer_id']);
         if (idDeveloper.length != 0) {
             maxidDeveloper = Math.max(...idDeveloper);
-            console.log(maxidDeveloper);
-            console.log(idDeveloper);
         }
         else {
             maxidDeveloper = 0;
@@ -140,7 +136,6 @@ let DeveloperService = class DeveloperService {
         }
         else {
             maxidIntegration = 0;
-            console.log('aqui');
         }
         maxidIntegration++;
         let company_name = integration.map(company => company['company_name']);
@@ -177,7 +172,6 @@ let DeveloperService = class DeveloperService {
             "comment": dataExcel[26][1],
             "sale_agent": dataExcel[29][3]
         };
-        console.log(info);
         if (info['ECRTI'] == 'x') {
             services = 'ECRTI';
         }
@@ -266,7 +260,6 @@ let DeveloperService = class DeveloperService {
                 });
             }
         }
-        console.log(developers);
         await this.developerModel.bulkCreate(developers).catch(err => console.log(err));
         if (company_name.includes(info['company']) && service.includes(services)) {
         }
@@ -283,7 +276,6 @@ let DeveloperService = class DeveloperService {
                 "sale_agent": info['sale_agent'],
                 "comment": ''
             };
-            console.log(companyDB);
             await this.integrationModel.create(companyDB).catch(err => console.log(err));
         }
     }

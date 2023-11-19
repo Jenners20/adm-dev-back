@@ -1,43 +1,35 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { DeveloperController } from './modules/developers/controller/developer.controller';
 import { DeveloperModel } from './modules/developers/model/developer.model';
 import { IntegrationModel } from './modules/developers/model/integration.model';
 import { DeveloperService } from './modules/developers/service/developer.service';
 
 @Module({
-  imports: [ ConfigModule.forRoot(),
-    SequelizeModule.forRoot({
+  imports: [ConfigModule.forRoot(),
+  SequelizeModule.forRoot({
     dialect: 'postgres',
-    host: 
-    
-    'localhost'
+    host:
+      'localhost'
     ,
-    port: 
-    
-    5432
-
+    port:
+      5432
     ,
-    username: 
-    
-    'postgres'
+    username:
+      'postgres'
     ,
-    password: 
-    
-    '1610'
+    password:
+      '1806'
     ,
-    database: 
-    
-    'postgres'
+    database:
+      'postgres'
     ,
-    models:[DeveloperModel,IntegrationModel],
+    models: [DeveloperModel, IntegrationModel],
     autoLoadModels: true,
     synchronize: false,
-  }),SequelizeModule.forFeature([DeveloperModel,IntegrationModel])],
-  controllers: [AppController,DeveloperController],
-  providers: [AppService,DeveloperService],
+  }), SequelizeModule.forFeature([DeveloperModel, IntegrationModel])],
+  controllers: [DeveloperController],
+  providers: [DeveloperService],
 })
-export class AppModule {}
+export class AppModule { }
